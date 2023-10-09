@@ -1,22 +1,30 @@
 import socket
 
-host = "127.0.0.1"
-port = 8001
+# Indirizzo IP e porta del server
+server_ip = '127.0.0.1'  # Sostituisci con l'indirizzo IP del tuo server
+server_port = 8001
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-s.connect((host, port))
+# Crea un socket UDP
+client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
-latitudine1 = 45.4219
-longitudine1 = 9.1342
-latitudine2 = 41.8919
-longitudine2 = 12.4958
+try:
+    while True:
+        # Input delle coordinate dal client
+        x = input("Inserisci la coordinata X: ")
+        y = input("Inserisci la coordinata Y: ")
 
-data = [latitudine1, longitudine1, latitudine2, longitudine2]
-bytes = b"".join([bytes(str(dato), "utf-8") for dato in data])
-print(bytes)
-s.sendall(bytes)
+        # Crea una stringa con le coordinate
+        coordinate = f"{x},{y}"
 
-data = s.recv(1024)
-print(data.decode())
+        # Invia i dati al server
+        client_socket.sendto(coordinate.encode(), (server_ip, server_port))
 
-s.close()
+        # Ricevi la risposta dal server
+        response, server_address = client_socket.recvfrom(1024)
+        print("Risposta dal server:", response.decode())
+
+except KeyboardInterrupt:
+    print("Client interrotto.")
+
+finally:
+    client_socket.close()
