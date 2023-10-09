@@ -8,7 +8,7 @@ public class App {
 
         try {
             // Create a UDP socket on port 8001 with a timeout of 60 seconds
-            socket = new DatagramSocket(8001);
+            socket = new DatagramSocket(8001);    // enter the port number (8001 is default)
             socket.setSoTimeout(60000); // Set timeout to 60 seconds
 
             while (true) {

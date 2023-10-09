@@ -22,8 +22,8 @@ def calculate_haversine_distance(lat1, lon1, lat2, lon2):
     return distance
 
 def main():
-    host = "192.168.1.61"
-    port = 8001
+    host = ""           # enter the server IP address
+    port = 8001         # enter the server port
 
     # Create a UDP socket
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:

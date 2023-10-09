@@ -4,8 +4,8 @@ import java.net.*;
 public class App {
     public static void main(String[] args) {
         // Server IP address and port
-        String serverIp = "192.168.1.61";
-        int serverPort = 8001;
+        String serverIp = "";           // enter the IP you want to connect to 
+        int serverPort = 8001;          // enter the port you want to connect to (8001 is default)
 
         DatagramSocket clientSocket = null;
 

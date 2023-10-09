@@ -1,8 +1,8 @@
 import socket
 
 # Server IP address and port
-server_ip = '192.168.1.61'
-server_port = 8001
+server_ip = ''              # enter the IP you want to connect to 
+server_port = 8001          # enter the port you want to connect to (8001 is default)
 
 # Create a UDP socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
