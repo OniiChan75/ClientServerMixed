@@ -11,14 +11,10 @@ longitudine1 = 9.1342
 latitudine2 = 41.8919
 longitudine2 = 12.4958
 
-# data = [latitudine1, longitudine1, latitudine2, longitudine2]
-# bytes = b"".join([bytes(str(dato), "utf-8") for dato in data])
-# print(bytes)
-# s.sendall(bytes)
-s.send(latitudine1.encode())
-s.send(longitudine1.encode())
-s.send(latitudine2.encode())
-s.send(longitudine2.encode())
+data = [latitudine1, longitudine1, latitudine2, longitudine2]
+bytes = b"".join([bytes(str(dato), "utf-8") for dato in data])
+print(bytes)
+s.sendall(bytes)
 
 data = s.recv(1024)
 print(data.decode())
