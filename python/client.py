@@ -14,14 +14,14 @@ try:
     client_socket.connect((server_ip, server_port))
     print("Connesso al server.")
     
-    # Input delle coordinate dal client (lon, lat; lon, lat)
-    longitudine1 = input("Inserisci longitudine: ")
-    latituine1 = input("Inserisci latitudine: ")
-    longitudine2 = input("Inserisci longitudine: ")
-    latituine2 = input("Inserisci latitudine: ")
+    # Input delle coordinate dal client (lat, lon ; lat, lon)
+    latituine1 = 45.4642700
+    longitudine1 = 9.1895100
+    latituine2 = 45.8558900
+    longitudine2 = 9.3970400
         
     # Crea una stringa con le coordinate
-    coordinate = f"{longitudine1},{latituine1};{longitudine2},{latituine2}"
+    coordinate = f"{latituine1},{longitudine1};{latituine2},{longitudine2}"
     print(coordinate)
 
     # Invia i dati al server
@@ -31,9 +31,10 @@ try:
         # Ricevi la risposta dal server
         response, server_address = client_socket.recvfrom(1024)
         risultato = response.decode()
-        if(float(risultato) < 0):
-            risultato = risultato * -1
-        print("Distanza tra i due punti:" + risultato)
+        #if(float(risultato) < 0):
+        #    risultato = risultato * -1
+        #print("Distanza tra i due punti:" + risultato + " km")
+        print(risultato)
                       
     except socket.timeout:
         print("Timeout scaduto. Riprova.")
