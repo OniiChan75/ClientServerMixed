@@ -22,18 +22,19 @@ def calculate_haversine_distance(lat1, lon1, lat2, lon2):
     return distance
 
 def main():
-    host = 'localhost'
+    host = "192.168.1.61"
     port = 8001
 
     # Create a UDP socket
     with socket.socket(socket.AF_INET, socket.SOCK_DGRAM) as s:
         s.bind((host, port))
         s.settimeout(60)  # Set a timeout of 60 seconds
+        print("Server is listening on {}:{}".format(host, port))
 
         while True:
             try:
                 data, addr = s.recvfrom(1024)
-                received_data = data.decode('utf-8')
+                received_data = data.decode()
                 print(received_data)
 
                 coordinates = received_data.split(";")
@@ -50,10 +51,11 @@ def main():
                     distance = calculate_haversine_distance(lat1, lon1, lat2, lon2)
 
                     response = "Distance between the two points: {:.2f} kilometers".format(distance)
-                    s.sendto(response.encode('utf-8'), addr)
+                    s.sendto(response.encode(), addr)
 
             except socket.timeout:
                 print("Socket timed out after 60 seconds of inactivity.")
+                # s.close()
             except Exception as e:
                 print("An error occurred:", str(e))
 
