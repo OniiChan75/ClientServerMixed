@@ -1,28 +1,43 @@
 import socket
 
 # Indirizzo IP e porta del server
-server_ip = '127.0.0.1'  # Sostituisci con l'indirizzo IP del tuo server
+server_ip = '192.168.1.61'
 server_port = 8001
 
 # Crea un socket UDP
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 
+timeout = 100.0
+client_socket.settimeout(timeout)
+
 try:
-    while True:
-        # Input delle coordinate dal client
-        x = input("Inserisci la coordinata X: ")
-        y = input("Inserisci la coordinata Y: ")
+    client_socket.connect((server_ip, server_port))
+    print("Connesso al server.")
+    
+    # Input delle coordinate dal client (lon, lat; lon, lat)
+    longitudine1 = input("Inserisci longitudine: ")
+    latituine1 = input("Inserisci latitudine: ")
+    longitudine2 = input("Inserisci longitudine: ")
+    latituine2 = input("Inserisci latitudine: ")
+        
+    # Crea una stringa con le coordinate
+    coordinate = f"{longitudine1},{latituine1};{longitudine2},{latituine2}"
+    print(coordinate)
 
-        # Crea una stringa con le coordinate
-        coordinate = f"{x},{y}"
+    # Invia i dati al server
+    client_socket.sendall(coordinate.encode())
 
-        # Invia i dati al server
-        client_socket.sendto(coordinate.encode(), (server_ip, server_port))
-
+    try:
         # Ricevi la risposta dal server
         response, server_address = client_socket.recvfrom(1024)
-        print("Risposta dal server:", response.decode())
-
+        risultato = response.decode()
+        if(float(risultato) < 0):
+            risultato = risultato * -1
+        print("Distanza tra i due punti:" + risultato)
+                      
+    except socket.timeout:
+        print("Timeout scaduto. Riprova.")
+        
 except KeyboardInterrupt:
     print("Client interrotto.")
 
